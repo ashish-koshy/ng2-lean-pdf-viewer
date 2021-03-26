@@ -23,4 +23,21 @@ export abstract class Util {
         const pathArrayFlat = pathArray.flatMap((part: any) => typeof part === 'string' ? part.split('.') : part);
         return pathArrayFlat.reduce((obj: any, key: string) => obj && obj[key], object) || value;
     }
+
+    static isValidBase64String(data: any): boolean {
+        return typeof data === 'string' && data.slice(0, 100).includes('data:application/pdf;base64');
+    }
+
+    static isValidUrlString(data: any): boolean {
+        if(typeof data === 'string') {
+            let url;
+            try {
+              url = new URL(data);
+            } catch {
+              return false;  
+            }
+            return url.protocol === 'http:' || url.protocol === 'https:';
+        }
+        return false;
+    }
 }

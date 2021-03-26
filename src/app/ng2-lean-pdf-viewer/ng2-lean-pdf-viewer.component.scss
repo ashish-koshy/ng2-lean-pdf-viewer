@@ -1,0 +1,22 @@
+#pdf-container {
+    position: relative;
+}
+
+#text-select { 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.2;
+    overflow: hidden;
+    line-height: 1.0;
+    position: absolute;
+}  
+
+#text-select > div {
+    cursor: text;
+    white-space: pre;
+    color: transparent;
+    position: absolute;
+    transform-origin: 0% 0%;
+}

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { CustomPDFInput, CustomPDFPage } from './ng2-lean-pdf-viewer/ng2-lean-pdf-viewer.models';
-
-import * as pdfjsLib from 'pdfjs-dist';
+import { CustomPDFInput, CustomPDFPage, OnProgressData } from './ng2-lean-pdf-viewer/pdf.models';
 
 @Component({
   selector: 'app-root',
@@ -10,23 +8,31 @@ import * as pdfjsLib from 'pdfjs-dist';
 })
 export class AppComponent {
 
-  title = 'ng2-lean-pdf-viewer';
+  title = 'app-root';
+  pdfSource: CustomPDFInput = {
+    /**
+     * The 'src' attribute could be any one of the following three types:
+     *  
+     * 1. A valid URL string that follows 'http:' or 'https:' protocols:
+     * src: 'http://localhost:4200/assets/dummy.pdf'
+     * 
+     * 2. A base64 encoded string that has a valid mime type prepended at the beginning:
+     * src: 'data:application/pdf;base64,...'
+     * 
+     * 3. An 'arraybuffer' like the type 'Uint8Array'. You could type-cast your data as:
+     * src: (yourData as Uint8Array)
+     * 
+     * */
+    src: 'http://localhost:4200/assets/dummy.pdf',
 
-  public pdfSource: CustomPDFInput = {
-    /** URL to the PDF document */
-    url: 'assets/dummy.pdf',
-    /** Auth token if needed (Like a JWT) */
+    /** In case the PDF file has access restrictions, provide your authentication token here (For e.g: JWT)  */
     authToken: '',
-    /** This is optional, it defaults to the value below. You can use any other PDF worker hosted at CDN */
-    pdfWorkerUrl: `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/es5/build/pdf.worker.js`
+
+    /** This is optional, it defaults to a freely hosted CDN url. You can use any other PDF worker hosted within your own private CDN */
+    pdfWorkerUrl: ``
   };
 
-  public setLoadingStatus(status: boolean): void {
-    console.log(`PDF loading : ${status}`);
-  }
-
-  public setPageDimensions(page: CustomPDFPage): void {
-    console.log(`PDF page info :`);
-    console.log(page);
-  }
+  public onError(error: any): void {}
+  public onProgress(status: OnProgressData): void {}
+  public onPageRendered(status: CustomPDFPage): void {}
 }

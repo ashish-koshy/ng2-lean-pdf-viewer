@@ -1,6 +1,7 @@
 <ng2-lean-pdf-viewer 
     [pdfInput]="pdfSource" 
-    (isLoading)="setLoadingStatus($event)"
-    (pageDimensions)="setPageDimensions($event)" 
+    (onError)="onError($event)"
+    (onProgress)="onProgress($event)"
+    (onPageRendered)="onPageRendered($event)" 
 >
 </ng2-lean-pdf-viewer>
