@@ -23,12 +23,11 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
   @Output() public onError = new EventEmitter<any>();
   @Output() public onProgress = new EventEmitter<OnProgressData>();
   @Output() public onPageRendered = new EventEmitter<CustomPDFPage>();
-  @ViewChild('pdfContainer') public pdfContainer!: ElementRef;
 
   private resizeTimer: any;
   private pdfData!: PDFDocumentProxy;
 
-  constructor(private container: ElementRef, private renderer: Renderer2) {}
+  constructor(private pdfContainer: ElementRef, private renderer: Renderer2) {}
 
   @HostListener('window:resize')
   public onResize(): void {
@@ -154,7 +153,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
   }
 
   private getContainerWidth(): number {
-    const parentContainer = this.container.nativeElement.parentElement;
+    const parentContainer = this.pdfContainer.nativeElement.parentElement;
     const parentWidth = parseFloat(Util.get(window.getComputedStyle(parentContainer), 'width', '0px'));
     const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     return (parentWidth || viewportWidth || window.screen.availWidth);
