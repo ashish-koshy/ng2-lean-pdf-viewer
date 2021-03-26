@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
-import { Renderer2, SimpleChanges, ViewChild } from '@angular/core';
+import { Renderer2, SimpleChanges } from '@angular/core';
 
 import { PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy, TextContent } from 'pdfjs-dist/types/display/api';
 import { PageViewport } from 'pdfjs-dist/types/display/display_utils';
@@ -85,6 +85,9 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
         pdfPage.height = viewport.height;
         this.setPageInfo(pdfPage);
         const pageContainer: HTMLElement = this.renderer.createElement('div');
+        this.renderer.setStyle(pageContainer, 'line-height', '1.0');
+        this.renderer.setStyle(pageContainer, 'overflow', 'hidden');
+        this.renderer.setStyle(pageContainer, 'position', 'relative');
         this.renderer.setStyle(pageContainer, 'width', `${viewport.width}px`);
         this.renderer.setStyle(pageContainer, 'height', `${viewport.height}px`);
         this.renderer.appendChild(pdfContainer, pageContainer);
@@ -95,9 +98,9 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
   }
 
   /**
-   * Only render canvas contents when the page is inside view-port
-   * Not doing so would lead to memory leaks on mobile devices like tablets or phones
-   * Especially while scrolling vertically
+   * Page elements like canvas, text or annotation layers should be removed from the 
+   * DOM when they are not visible inside the view-port. Not doing so could lead
+   * to memory leaks on mobile devices like tablets or phones.
    */
   private renderPage(page: PDFPageProxy, pageContainer: HTMLElement, viewport: PageViewport): void {
     const observer = new IntersectionObserver(entries => {
@@ -109,17 +112,18 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
           canvas.height = viewport.height;
           page.cleanupAfterRender = true;;
           page.render({ canvasContext, viewport }).promise.then(() => this.renderer.appendChild(pageContainer, canvas));
-          /** TODO :: Create selectable text layer */
-          // page.getTextContent().then((textContent: TextContent) => {
-          //   const textDivs: HTMLElement[] = [];
-          //   const container: HTMLCanvasElement = this.renderer.createElement('div');
-          //   this.renderer.setAttribute(container, 'id', 'text-select');
-          //   this.renderer.setStyle(container, 'top', `${canvas.offsetTop}px`);
-          //   this.renderer.setStyle(container, 'left', `${canvas.offsetLeft}px`);
-          //   this.renderer.setStyle(container, 'width', `${canvas.width}px`);
-          //   this.renderer.setStyle(container, 'height', `${canvas.height}px`);
-          //   pdfjsLib.renderTextLayer({ textContent, container, viewport, textDivs }).promise.then(() => this.renderer.appendChild(pageContainer, container));
-          // });
+          /** TODO :: Needs improvement :: Create selectable text layer */
+          page.getTextContent().then((textContent: TextContent) => {
+            const textDivs: HTMLElement[] = [];
+            pdfjsLib.renderTextLayer({ textContent, container: pageContainer, viewport, textDivs }).promise.then(() => {
+              textDivs.forEach(child => {
+                this.renderer.setStyle(child, 'cursor', 'text');
+                this.renderer.setStyle(child, 'white-space', 'pre');
+                this.renderer.setStyle(child, 'color', 'transparent');
+                this.renderer.setStyle(child, 'position', 'absolute');
+              });
+            });
+          });
         } else {
           page.cleanup();
           page.destroyed = true;
