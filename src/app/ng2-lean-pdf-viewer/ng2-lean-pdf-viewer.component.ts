@@ -89,7 +89,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
         this.renderer.setStyle(pageContainer, 'width', `${viewport.width}px`);
         this.renderer.setStyle(pageContainer, 'height', `${viewport.height}px`);
         this.renderer.appendChild(pdfContainer, pageContainer);
-        this.renderPages(page, pageContainer, viewport);
+        this.renderPage(page, pageContainer, viewport);
       });
     }
     this.pdfData = pdf;
@@ -100,7 +100,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
    * Not doing so would lead to memory leaks on mobile devices like tablets or phones
    * Especially while scrolling vertically
    */
-  private renderPages(page: PDFPageProxy, pageContainer: HTMLElement, viewport: PageViewport): void {
+  private renderPage(page: PDFPageProxy, pageContainer: HTMLElement, viewport: PageViewport): void {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
