@@ -16,10 +16,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ng2-lean-pdf-viewer'`, () => {
+  it(`should have as title 'app-root'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ng2-lean-pdf-viewer');
+    expect(app.title).toEqual('app-root');
   });
 
   it('should render title', () => {
