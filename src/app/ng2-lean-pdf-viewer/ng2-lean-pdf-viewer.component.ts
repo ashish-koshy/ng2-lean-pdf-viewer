@@ -83,7 +83,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
         pdfPage.id = i;
         pdfPage.width = viewport.width;
         pdfPage.height = viewport.height;
-        this.setPageData(pdfPage);
+        this.setPageInfo(pdfPage);
         const pageContainer: HTMLElement = this.renderer.createElement('div');
         this.renderer.setStyle(pageContainer, 'width', `${viewport.width}px`);
         this.renderer.setStyle(pageContainer, 'height', `${viewport.height}px`);
@@ -167,7 +167,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
     }
   }
 
-  private setPageData(page: CustomPDFPage): void {
+  private setPageInfo(page: CustomPDFPage): void {
     this.log('Page : ', page);
     this.onPageRendered.emit(page);
   }
