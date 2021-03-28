@@ -1,14 +1,13 @@
 {
-  "name": "ng2-lean-pdf-viewer",
-  "version": "0.0.0",
+  "name": "@ashish-koshy/ng2-lean-pdf-viewer",
+  "version": "1.0.0",
   "description": "Angular 11+ PDF JS viewer",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "build": "ng build ng2-lean-pdf-viewer",
     "test": "ng test ng2-lean-pdf-viewer",
-    "lint": "ng lint ng2-lean-pdf-viewer",
-    "publish-ng2-lean-pdf-viewer": "ng build ng2-lean-pdf-viewer --prod && cd dist/ng2-lean-pdf-viewer && npm publish"
+    "lint": "ng lint ng2-lean-pdf-viewer"
   },
   "author": {
     "name": "Ashish Koshy",
@@ -17,7 +16,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer"
+    "url": "git+https://github.com/ashish-koshy/ng2-lean-pdf-viewer.git"
   },
   "keywords": [
     "angular",
