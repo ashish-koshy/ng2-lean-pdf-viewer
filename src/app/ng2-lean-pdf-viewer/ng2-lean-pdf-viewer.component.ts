@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, Output, ViewEncapsulation } from '@angular/core';
 import { Renderer2, SimpleChanges } from '@angular/core';
 
 import { PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy, TextContent } from 'pdfjs-dist/types/display/api';
@@ -12,8 +12,9 @@ import { Util } from './pdf.utils';
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'ng2-lean-pdf-viewer',
-  templateUrl: './ng2-lean-pdf-viewer.component.html',
-  styleUrls: ['./ng2-lean-pdf-viewer.component.scss']
+  styleUrls: ['../../../node_modules/pdfjs-dist/web/pdf_viewer.css'],
+  encapsulation: ViewEncapsulation.ShadowDom,
+  template: ''
 })
 export class Ng2LeanPdfViewerComponent implements OnChanges {
   
@@ -25,9 +26,17 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
   @Output() public onPageRendered = new EventEmitter<CustomPDFPage>();
 
   private resizeTimer: any;
+  private pdfContainer!: HTMLElement;
   private pdfData!: PDFDocumentProxy;
 
-  constructor(private pdfContainer: ElementRef, private renderer: Renderer2) {}
+  constructor(private parentContainer: ElementRef, private renderer: Renderer2) {
+    this.pdfContainer = this.renderer.createElement('div');
+    this.renderer.addClass(this.pdfContainer, 'pdfViewer');
+    this.renderer.setAttribute(this.pdfContainer, 'id', 'viewer');
+    this.renderer.setAttribute(this.parentContainer.nativeElement, 'tabindex', '0');
+    this.renderer.setAttribute(this.parentContainer.nativeElement, 'id', 'viewerContainer');
+    this.renderer.appendChild(this.parentContainer.nativeElement, this.pdfContainer);
+  }
 
   @HostListener('window:resize')
   public onResize(): void {
@@ -75,7 +84,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
   private generatePages(pdf: PDFDocumentProxy): void {
     for (let i = 1; i <= pdf._pdfInfo.numPages; i++) {
       pdf.getPage(i).then(page => {
-        const pdfContainer = this.pdfContainer.nativeElement;
+        const pdfContainer = this.pdfContainer;
         const viewport = this.getPageViewport(page);
         viewport.width = Math.floor(viewport.width);
         viewport.height = Math.floor(viewport.height);
@@ -85,11 +94,11 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
         pdfPage.height = viewport.height;
         this.setPageInfo(pdfPage);
         const pageContainer: HTMLElement = this.renderer.createElement('div');
-        this.renderer.setStyle(pageContainer, 'line-height', '1.0');
-        this.renderer.setStyle(pageContainer, 'overflow', 'hidden');
-        this.renderer.setStyle(pageContainer, 'position', 'relative');
+        this.renderer.addClass(pageContainer, 'page');
         this.renderer.setStyle(pageContainer, 'width', `${viewport.width}px`);
         this.renderer.setStyle(pageContainer, 'height', `${viewport.height}px`);
+        this.renderer.setAttribute(pageContainer, 'data-page-number', i.toString());
+        this.renderer.setAttribute(pageContainer, 'aria-label', `Page ${i.toString()}`);
         this.renderer.appendChild(pdfContainer, pageContainer);
         this.renderPage(page, pageContainer, viewport);
       });
@@ -106,27 +115,34 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          const canvasWrapper: HTMLCanvasElement = this.renderer.createElement('div');
+          this.renderer.addClass(canvasWrapper, 'canvasWrapper');
+          this.renderer.setStyle(canvasWrapper, 'width', `${viewport.width}px`);
+          this.renderer.setStyle(canvasWrapper, 'height', `${viewport.height}px`);
           const canvas: HTMLCanvasElement = this.renderer.createElement('canvas');
           const canvasContext: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
           canvas.width = viewport.width;
           canvas.height = viewport.height;
-          page.cleanupAfterRender = true;;
-          page.render({ canvasContext, viewport }).promise.then(() => this.renderer.appendChild(pageContainer, canvas));
-          /** TODO :: Needs improvement :: Create selectable text layer */
+          page.cleanupAfterRender = true;
+          this.renderer.appendChild(canvasWrapper, canvas);
+          page.render({ canvasContext, viewport }).promise.then(() => {
+            this.renderer.appendChild(pageContainer, canvasWrapper);
+            this.renderer.setAttribute(pageContainer, 'data-loaded', 'true');
+          });
           page.getTextContent().then((textContent: TextContent) => {
+            const textLayerWrapper: HTMLCanvasElement = this.renderer.createElement('div');
+            this.renderer.addClass(textLayerWrapper, 'textLayer');
+            this.renderer.setStyle(textLayerWrapper, 'width', `${viewport.width}px`);
+            this.renderer.setStyle(textLayerWrapper, 'height', `${viewport.height}px`);
             const textDivs: HTMLElement[] = [];
-            pdfjsLib.renderTextLayer({ textContent, container: pageContainer, viewport, textDivs }).promise.then(() => {
-              textDivs.forEach(child => {
-                this.renderer.setStyle(child, 'cursor', 'text');
-                this.renderer.setStyle(child, 'white-space', 'pre');
-                this.renderer.setStyle(child, 'color', 'transparent');
-                this.renderer.setStyle(child, 'position', 'absolute');
-              });
+            pdfjsLib.renderTextLayer({ textContent, container: textLayerWrapper, viewport, textDivs }).promise.then(() => {
+              this.renderer.appendChild(pageContainer, textLayerWrapper);
             });
           });
         } else {
           page.cleanup();
           page.destroyed = true;
+          this.renderer.removeAttribute(pageContainer, 'data-loaded');
           Array.from(pageContainer.childNodes).forEach(child => this.renderer.removeChild(pageContainer, child));
         }
       }, {
@@ -151,13 +167,13 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
 
   private removeAllPageNodes(): void {
     if (this.pdfContainer) {
-      const pdfContainer = (this.pdfContainer.nativeElement) as HTMLElement;
+      const pdfContainer = this.pdfContainer;
       Array.from(pdfContainer.childNodes).forEach(child => this.renderer.removeChild(pdfContainer, child));
     }
   }
 
   private getContainerWidth(): number {
-    const parentContainer = this.pdfContainer.nativeElement.parentElement;
+    const parentContainer = this.parentContainer.nativeElement.parentElement;
     const parentWidth = parseFloat(Util.get(window.getComputedStyle(parentContainer), 'width', '0px'));
     const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     return (parentWidth || viewportWidth || window.screen.availWidth);
