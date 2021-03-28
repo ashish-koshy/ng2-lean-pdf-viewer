@@ -12,8 +12,7 @@ import { Util } from './pdf.utils';
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'ng2-lean-pdf-viewer',
-  templateUrl: './ng2-lean-pdf-viewer.component.html',
-  styleUrls: ['./ng2-lean-pdf-viewer.component.scss']
+  template: ''
 })
 export class Ng2LeanPdfViewerComponent implements OnChanges {
   
