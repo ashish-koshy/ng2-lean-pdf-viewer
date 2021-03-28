@@ -10,7 +10,7 @@ Two important features of this implementation:
 
 ## Installation:
 ```
-npm i ng2-lean-pdf-viewer
+npm i @ashish-koshy/ng2-lean-pdf-viewer
 ```
 
 ## Add 'ng2-lean-pdf-viewer' to your app.module.ts:
