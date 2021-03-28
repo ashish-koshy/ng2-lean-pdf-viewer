@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer/issues"
   },
-  "homepage": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer#readme"
+  "homepage": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer#readme",
+  "publishConfig": { 
+    "registry":"https://npm.pkg.github.com"
+ }
 }
