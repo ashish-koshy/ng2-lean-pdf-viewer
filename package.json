@@ -7,7 +7,8 @@
     "ng": "ng",
     "build": "ng build ng2-lean-pdf-viewer",
     "test": "ng test ng2-lean-pdf-viewer",
-    "lint": "ng lint ng2-lean-pdf-viewer"
+    "lint": "ng lint ng2-lean-pdf-viewer",
+    "publish-ng2-lean-pdf-viewer": "ng build ng2-lean-pdf-viewer --prod && cd dist/ng2-lean-pdf-viewer && npm publish"
   },
   "author": {
     "name": "Ashish Koshy",
