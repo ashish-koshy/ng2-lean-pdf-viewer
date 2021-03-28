@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "build": "ng build ng2-lean-pdf-viewer",
+    "build": "ng build ng2-lean-pdf-viewer --prod",
     "test": "ng test ng2-lean-pdf-viewer",
     "lint": "ng lint ng2-lean-pdf-viewer"
   },
