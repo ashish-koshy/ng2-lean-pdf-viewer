@@ -1,0 +1,12 @@
+{
+  "name": "ng2-lean-pdf-viewer",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^11.0.9",
+    "@angular/core": "^11.0.9",
+    "pdfjs-dist": "^2.6.347"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}

@@ -12,7 +12,7 @@ import { Util } from './pdf.utils';
 @Component({
   // tslint:disable-next-line: component-selector
   selector: 'ng2-lean-pdf-viewer',
-  styleUrls: ['../../../node_modules/pdfjs-dist/web/pdf_viewer.css'],
+  styleUrls: ['../../../../node_modules/pdfjs-dist/web/pdf_viewer.css'],
   encapsulation: ViewEncapsulation.ShadowDom,
   template: ''
 })

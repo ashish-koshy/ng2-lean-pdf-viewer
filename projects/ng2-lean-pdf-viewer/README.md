@@ -1,10 +1,29 @@
+
+# Overview
 This is a very simple PDF viewer implementation in Angular 11 based on the PDFjs library from Mozilla. Its a great place to start for anybody who is looking to build on top of the most basic features like Canvas layer + Text layer rendering which have already been implemented for you.
 
 Two important features of this implementation:
 - It leverages Angular's built in 'Renderer' module to modify PDF page elements in a safe way without the need to have any direct access to the DOM.
 - It lazy loads or lazy renders every page i.e a canvas layer or text layer for any given page is only added to the DOM when the page container is inside the viewport. This is helpful in avoiding memory leaks when you need to render very large documents. Creating 100 canvases for 100 pages would easily cause low powered devices like phones or tablets to run out of memory.
 
-# Component selector:
+
+# Installation"
+`
+npm install ng2-lean-pdf-viewer
+`
+
+# Add ng2-lean-pdf-viewer to your app.module.ts:
+`
+import { Ng2LeanPdfViewerModule } from 'ng2-lean-pdf-viewer';
+
+@NgModule({
+  imports: [
+    Ng2LeanPdfViewerModule
+  ]
+});
+`
+
+# Add this component selector to your template:
 `
 <ng2-lean-pdf-viewer 
     [pdfInput]="pdfSource" 
@@ -16,8 +35,9 @@ Two important features of this implementation:
 `
 
 # Input data model, for instance, if 'pdfSource' is your input variable:
-
 `
+import { CustomPDFInput } from 'ng2-lean-pdf-viewer';
+
 pdfSource: CustomPDFInput = {
   /**
    * The 'src' attribute could be any one of the following three types:

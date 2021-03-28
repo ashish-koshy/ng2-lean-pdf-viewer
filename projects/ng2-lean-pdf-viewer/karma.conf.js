@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/ng2-lean-pdf-viewer'),
+      dir: require('path').join(__dirname, '../../coverage/ng2-lean-pdf-viewer'),
       subdir: '.',
       reporters: [
         { type: 'html' },

@@ -5,11 +5,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o --port 4200",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "build": "ng build ng2-lean-pdf-viewer",
+    "test": "ng test ng2-lean-pdf-viewer",
+    "lint": "ng lint ng2-lean-pdf-viewer"
   },
   "author": {
     "name": "Ashish Koshy",
@@ -48,7 +46,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.6",
+    "@angular-devkit/build-angular": "~0.1100.7",
     "@angular/cli": "~11.0.6",
     "@angular/compiler-cli": "~11.0.6",
     "@types/jasmine": "~3.6.0",
@@ -61,6 +59,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^11.0.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
