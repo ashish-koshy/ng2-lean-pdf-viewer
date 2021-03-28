@@ -5,7 +5,7 @@ Two important features of this implementation:
 - It lazy loads or lazy renders every page i.e a canvas layer or text layer for any given page is only added to the DOM when the page container is inside the viewport. This is helpful in avoiding memory leaks when you need to render very large documents. Creating 100 canvases for 100 pages would easily cause low powered devices like phones or tablets to run out of memory.
 
 # Component selector:
-`
+```
 <ng2-lean-pdf-viewer 
     [pdfInput]="pdfSource" 
     (onError)="onError($event)"
@@ -13,11 +13,11 @@ Two important features of this implementation:
     (onPageRendered)="onPageRendered($event)" 
 >
 </ng2-lean-pdf-viewer>
-`
+```
 
 # Input data model, for instance, if 'pdfSource' is your input variable:
 
-`
+```
 pdfSource: CustomPDFInput = {
   /**
    * The 'src' attribute could be any one of the following three types:
@@ -40,8 +40,8 @@ pdfSource: CustomPDFInput = {
   /** This is optional, it defaults to the value below. You can use any other PDF worker hosted within your own private CDN */
   pdfWorkerUrl = '';
 }
+```
 
-`
 # Ng2LeanPdfViewer
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
