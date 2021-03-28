@@ -5,11 +5,11 @@
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^11.0.9",
-    "@angular/core": "^11.0.9",
-    "pdfjs-dist": "^2.6.347"
+    "@angular/core": "^11.0.9"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "pdfjs-dist": "^2.6.347"
   },
   "author": {
     "name": "Ashish Koshy",

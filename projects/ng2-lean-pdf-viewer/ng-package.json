@@ -6,5 +6,8 @@
     "umdModuleIds": {
       "pdfjs-dist": "pdfjs-dist"
     }
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "pdfjs-dist"
+  ]
 }
