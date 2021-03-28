@@ -1,0 +1,36 @@
+{
+  "name": "ng2-lean-pdf-viewer",
+  "version": "0.0.1",
+  "description": "Angular 11+ PDF JS viewer",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^11.0.9",
+    "@angular/core": "^11.0.9",
+    "pdfjs-dist": "^2.6.347"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "author": {
+    "name": "Ashish Koshy",
+    "email": "ashish.avior@gmail.com"
+  },
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer"
+  },
+  "keywords": [
+    "angular",
+    "pdf",
+    "angular",
+    "angular-pdf",
+    "ng2",
+    "ng2-pdf",
+    "angular11"
+  ],
+  "bugs": {
+    "url": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer/issues"
+  },
+  "homepage": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer#readme"
+}

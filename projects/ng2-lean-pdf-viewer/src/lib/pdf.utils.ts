@@ -3,7 +3,7 @@ export abstract class Util {
      * @param obj is checked to find out whether it qualifies as an empty object.
      * @returns true if the input is an empty object
      */
-    static isEmptyObject = (obj: any) => {
+    static isEmptyObject(obj: any): boolean {
         if (obj === null || obj === undefined || Array.isArray(obj) || typeof obj !== 'object') {
             return true;
         }
