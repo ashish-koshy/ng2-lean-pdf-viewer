@@ -1,6 +1,6 @@
 {
   "name": "@ashish-koshy/ng2-lean-pdf-viewer",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Angular 11+ PDF JS viewer",
   "license": "MIT",
   "scripts": {
