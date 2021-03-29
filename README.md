@@ -13,9 +13,9 @@ Two important features of this implementation:
 npm i @ashish-koshy/ng2-lean-pdf-viewer
 ```
 
-## Add 'ng2-lean-pdf-viewer' to your app.module.ts:
+## Add '@ashish-koshy/ng2-lean-pdf-viewer' to your app.module.ts:
 ```
-import { Ng2LeanPdfViewerModule } from 'ng2-lean-pdf-viewer';
+import { Ng2LeanPdfViewerModule } from '@ashish-koshy/ng2-lean-pdf-viewer';
 
 @NgModule({
   imports: [
@@ -38,28 +38,28 @@ import { Ng2LeanPdfViewerModule } from 'ng2-lean-pdf-viewer';
 ## Input data model, for instance, if 'pdfSource' is your input variable:
 
 ```
-import { CustomPDFInput } from 'ng2-lean-pdf-viewer';
+import { CustomPDFInput } from '@ashish-koshy/ng2-lean-pdf-viewer';
 
 pdfSource: CustomPDFInput = {
   /**
-   * The 'src' attribute could be any one of the following three types:
-   *  
-   * 1. A valid URL string that follows 'http:' or 'https:' protocols:
-   * src: 'http://www.example.com/dummy.pdf'
-   * 
-   * 2. A base64 string that has a valid mime type prepended at the beginning:
-   * src: 'data:application/pdf;base64,...'
-   * 
-   * 3. An 'arraybuffer' like the type 'Uint8Array'. You could type-cast your data as:
-   * src: (yourData as Uint8Array)
-   * 
-   * */
-  src: string | TypedArray = '';
+    * The 'src' attribute could be any one of the following three types:
+    *  
+    * 1. A valid URL string that follows 'http:' or 'https:' protocols:
+    * src: 'http://localhost:4200/assets/dummy.pdf'
+    * 
+    * 2. A base64 string that has a valid mime type prepended at the beginning:
+    * src: 'data:application/pdf;base64,...'
+    * 
+    * 3. An 'arraybuffer' like the type 'Uint8Array'. You could type-cast your data as:
+    * src: (yourData as Uint8Array)
+    * 
+    * */
+  src: '',
   
   /** In case the PDF file has access restrictions, provide your authentication token here (For e.g: JWT)  */
-  authToken = '';
+  authToken: '',
 
   /** This is optional, it defaults to the value below. You can use any other PDF worker hosted within your own private CDN */
-  pdfWorkerUrl = '';
+  pdfWorkerUrl: ''
 }
 ```
