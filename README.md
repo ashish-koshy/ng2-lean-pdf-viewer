@@ -9,57 +9,14 @@ Two important features of this implementation:
 - It lazy loads or lazy renders every page i.e a canvas layer or text layer for any given page is only added to the DOM when the page container is inside the viewport. This is helpful in avoiding memory leaks when you need to render very large documents. Creating 100 canvases for 100 pages would easily cause low powered devices like phones or tablets to run out of memory.
 
 ## Installation:
+Clone the repository and install node/npm package manager on your system and then run the following command at the root folder:
 ```
-npm i @ashish-koshy/ng2-lean-pdf-viewer
-```
-
-## Add '@ashish-koshy/ng2-lean-pdf-viewer' to your app.module.ts:
-```
-import { Ng2LeanPdfViewerModule } from '@ashish-koshy/ng2-lean-pdf-viewer';
-
-@NgModule({
-  imports: [
-    Ng2LeanPdfViewerModule
-  ]
-});
+npm install
 ```
 
-## Add the component selector to your template:
+## Debugging:
+A 'test-app' has been included along with this project that directly links to the 'ng2-lean-pdf-viewer' project library files.
+Any change you make within the library would automatically reload the test-app and would be refected in your browser:
 ```
-<ng2-lean-pdf-viewer 
-    [pdfInput]="pdfSource" 
-    (onError)="onError($event)"
-    (onProgress)="onProgress($event)"
-    (onPageRendered)="onPageRendered($event)" 
->
-</ng2-lean-pdf-viewer>
-```
-
-## Input data model, for instance, if 'pdfSource' is your input variable:
-
-```
-import { CustomPDFInput } from '@ashish-koshy/ng2-lean-pdf-viewer';
-
-pdfSource: CustomPDFInput = {
-  /**
-    * The 'src' attribute could be any one of the following three types:
-    *  
-    * 1. A valid URL string that follows 'http:' or 'https:' protocols:
-    * src: 'http://localhost:4200/assets/dummy.pdf'
-    * 
-    * 2. A base64 string that has a valid mime type prepended at the beginning:
-    * src: 'data:application/pdf;base64,...'
-    * 
-    * 3. An 'arraybuffer' like the type 'Uint8Array'. You could type-cast your data as:
-    * src: (yourData as Uint8Array)
-    * 
-    * */
-  src: '',
-  
-  /** In case the PDF file has access restrictions, provide your authentication token here (For e.g: JWT)  */
-  authToken: '',
-
-  /** This is optional, it defaults to the value below. You can use any other PDF worker hosted within your own private CDN */
-  pdfWorkerUrl: ''
-}
+npm start
 ```
