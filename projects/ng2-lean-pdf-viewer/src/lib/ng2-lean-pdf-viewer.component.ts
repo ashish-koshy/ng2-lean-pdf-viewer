@@ -28,6 +28,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
   private resizeTimer: any;
   private pdfContainer!: HTMLElement;
   private pdfData!: PDFDocumentProxy;
+  private lastVisiblePageIndex = -1;
 
   constructor(private parentContainer: ElementRef, private renderer: Renderer2) {
     this.pdfContainer = this.renderer.createElement('div');
@@ -82,6 +83,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
   }
 
   private generatePages(pdf: PDFDocumentProxy): void {
+    this.lastVisiblePageIndex = -1;
     for (let i = 1; i <= pdf._pdfInfo.numPages; i++) {
       pdf.getPage(i).then(page => {
         const pdfContainer = this.pdfContainer;
@@ -115,6 +117,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          this.lastVisiblePageIndex = page.pageNumber;
           const canvasWrapper: HTMLCanvasElement = this.renderer.createElement('div');
           this.renderer.addClass(canvasWrapper, 'canvasWrapper');
           this.renderer.setStyle(canvasWrapper, 'width', `${viewport.width}px`);
@@ -139,14 +142,15 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
               this.renderer.appendChild(pageContainer, textLayerWrapper);
             });
           });
-        } else {
+        } else if (page.pageNumber !== this.lastVisiblePageIndex) {
           page.cleanup();
           page.destroyed = true;
+          page.pendingCleanup = false;
           this.renderer.removeAttribute(pageContainer, 'data-loaded');
           Array.from(pageContainer.childNodes).forEach(child => this.renderer.removeChild(pageContainer, child));
         }
       }, {
-        threshold: [0, .1, .9, 1]
+        threshold: [0.0]
       });
     });
     observer.observe(pageContainer);
