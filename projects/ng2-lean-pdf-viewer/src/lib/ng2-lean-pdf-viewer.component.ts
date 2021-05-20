@@ -53,7 +53,6 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
 
   private loadPdf(input: CustomPDFInput): void {
     if (!Util.isEmptyItem(input.src)) {
-      this.lastVisiblePageIndex = -1;
       this.removeAllPageNodes();
       this.setPdfWorkerUrl(input);
       const loadParameters = this.getPdfLoadParameters(input); 
@@ -143,11 +142,10 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
               this.renderer.appendChild(pageContainer, textLayerWrapper);
             });
           });
-        } else if(page.pageNumber !== this.lastVisiblePageIndex 
-                  && (page.pageNumber !== this.lastVisiblePageIndex - 1) 
-                    && (page.pageNumber !== this.lastVisiblePageIndex + 1)) {
+        } else if (page.pageNumber !== this.lastVisiblePageIndex) {
           page.cleanup();
           page.destroyed = true;
+          page.pendingCleanup = false;
           this.renderer.removeAttribute(pageContainer, 'data-loaded');
           Array.from(pageContainer.childNodes).forEach(child => this.renderer.removeChild(pageContainer, child));
         }
