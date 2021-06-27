@@ -3,7 +3,7 @@ import { Renderer2, SimpleChanges } from '@angular/core';
 
 import { PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy, TextContent } from 'pdfjs-dist/types/display/api';
 import { PageViewport } from 'pdfjs-dist/types/display/display_utils';
-import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfjsLib from 'pdfjs-dist/es5/build/pdf';
 
 import { passwordResponses, unsupportedFeatures, logTypes } from './pdf.enums';
 import { CustomPDFInput, CustomPDFPage, OnProgressData } from './pdf.models';
