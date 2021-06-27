@@ -1,6 +1,6 @@
 {
   "name": "@ashish-koshy/ng2-lean-pdf-viewer",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Angular 11+ PDF JS viewer",
   "license": "MIT",
   "peerDependencies": {
@@ -33,7 +33,7 @@
     "url": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer/issues"
   },
   "homepage": "https://github.com/ashish-koshy/ng2-lean-pdf-viewer#readme",
-  "publishConfig": { 
-    "registry":"https://registry.npmjs.org"
- }
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
 }
