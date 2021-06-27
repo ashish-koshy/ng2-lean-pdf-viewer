@@ -3,7 +3,7 @@ import { Renderer2, SimpleChanges } from '@angular/core';
 
 import { PDFDocumentLoadingTask, PDFDocumentProxy, PDFPageProxy, TextContent } from 'pdfjs-dist/types/display/api';
 import { PageViewport } from 'pdfjs-dist/types/display/display_utils';
-import * as pdfjsLib from 'pdfjs-dist/es5/build/pdf';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 
 import { passwordResponses, unsupportedFeatures, logTypes } from './pdf.enums';
 import { CustomPDFInput, CustomPDFPage, OnProgressData } from './pdf.models';
@@ -185,7 +185,7 @@ export class Ng2LeanPdfViewerComponent implements OnChanges {
 
   private setPdfWorkerUrl(input: CustomPDFInput): void {
     if (Util.isEmptyItem(input.pdfWorkerUrl)) {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/es5/build/pdf.worker.js`;
+      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/legacy/build/pdf.worker.js`;
     } else {
       pdfjsLib.GlobalWorkerOptions.workerSrc = input.pdfWorkerUrl;
     }

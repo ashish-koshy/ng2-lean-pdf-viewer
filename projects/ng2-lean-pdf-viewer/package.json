@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "tslib": "^2.0.0",
-    "pdfjs-dist": "^2.6.347"
+    "pdfjs-dist": "^2.8.335"
   },
   "author": {
     "name": "Ashish Koshy",
